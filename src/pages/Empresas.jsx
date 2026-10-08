@@ -58,46 +58,50 @@ function Empresas() {
       {error && <p className="empresas-alert" role="alert">{error}</p>}
       {loading ? (
         <p className="empresas-state" role="status">Cargando empresas...</p>
-      ) : empresas.length === 0 ? (
-        <div className="empresas-empty">
-          <h2>Aún no hay empresas</h2>
-          <p>Agrega la primera empresa para verla en este listado.</p>
-        </div>
-      ) : (
-        <div className="empresas-table-wrap">
-          <table className="empresas-table">
-            <thead>
-              <tr>
-                <th scope="col">Empresa</th>
-                <th scope="col">CUIT</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Teléfono</th>
-                <th scope="col"><span className="sr-only">Acciones</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              {empresas.map((empresa) => (
-                <tr key={empresa.id_empresa}>
-                  <th scope="row">{empresa.nombre}</th>
-                  <td>{empresa.cuit || '—'}</td>
-                  <td>{empresa.email || '—'}</td>
-                  <td>{empresa.telefono || '—'}</td>
-                  <td className="empresa-actions">
-                    <Link to={`/empresas/${empresa.id_empresa}/editar`}>Editar</Link>
-                    <button
-                      type="button"
-                      className="empresa-delete"
-                      onClick={() => handleEliminar(empresa)}
-                      disabled={eliminando === empresa.id_empresa}
-                    >
-                      {eliminando === empresa.id_empresa ? 'Eliminando…' : 'Eliminar'}
-                    </button>
-                  </td>
+      ) : error && empresas.length === 0 ? null : (
+        empresas.length === 0 ? (
+          <div className="empresas-empty">
+            <h2>Aún no hay empresas</h2>
+            <p>Agrega la primera empresa para verla en este listado.</p>
+          </div>
+        ) : (
+          <div className="empresas-table-wrap">
+            <table className="empresas-table">
+              <thead>
+                <tr>
+                  <th scope="col">Empresa</th>
+                  <th scope="col">CUIT</th>
+                  <th scope="col">Correo</th>
+                  <th scope="col">Teléfono</th>
+                  <th scope="col">Estado</th>
+                  <th scope="col"><span className="sr-only">Acciones</span></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {empresas.map((empresa) => (
+                  <tr key={empresa.id_empresa}>
+                    <th scope="row">{empresa.nombre}</th>
+                    <td>{empresa.cuit || '—'}</td>
+                    <td>{empresa.email || '—'}</td>
+                    <td>{empresa.telefono || 'Sin dato'}</td>
+                    <td>{empresa.activo ? 'Activa' : 'Inactiva'}</td>
+                    <td className="empresa-actions">
+                      <Link to={`/empresas/${empresa.id_empresa}/editar`}>Editar</Link>
+                      <button
+                        type="button"
+                        className="empresa-delete"
+                        onClick={() => handleEliminar(empresa)}
+                        disabled={eliminando === empresa.id_empresa}
+                      >
+                        {eliminando === empresa.id_empresa ? 'Eliminando…' : 'Eliminar'}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
       )}
     </section>
   )
