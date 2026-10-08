@@ -39,7 +39,13 @@ function EmpresaForm() {
 
     setGuardando(true)
     try {
-      await crearEmpresa(form)
+      const datosEmpresa = {
+        ...form,
+        email: form.email.trim() ? form.email : null,
+        telefono: form.telefono.trim() ? form.telefono : null,
+        direccion: form.direccion.trim() ? form.direccion : null,
+      }
+      await crearEmpresa(datosEmpresa)
       navigate('/')
     } catch (error) {
       setErrores({
