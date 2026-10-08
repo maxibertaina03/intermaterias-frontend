@@ -109,3 +109,57 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.navbar a:hover {
+  color: var(--text-h);
+  background: var(--accent-bg);
+}
+
+.navbar a.active {
+  color: var(--text-h);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+}
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 64px 16px;
+}
+
+.not-found h1 {
+  font-size: 96px;
+  color: var(--accent);
+  margin: 0;
+}
+
+.not-found .back-link {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--accent-border);
+  border-radius: 6px;
+  padding: 8px 16px;
+}
+
+.not-found .back-link:hover {
+  background: var(--accent-bg);
+}
