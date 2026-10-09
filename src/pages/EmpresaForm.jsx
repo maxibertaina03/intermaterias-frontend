@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { crearEmpresa } from '../services/empresasService.js'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { actualizarEmpresa, crearEmpresa, obtenerEmpresa } from '../services/empresasService.js'
 
 const campos = [
   { name: 'nombre', label: 'Nombre', required: true },
@@ -10,17 +10,53 @@ const campos = [
   { name: 'direccion', label: 'Dirección' },
 ]
 
+const formVacio = {
+  nombre: '',
+  cuit: '',
+  email: '',
+  telefono: '',
+  direccion: '',
+}
+
 function EmpresaForm() {
-  const [form, setForm] = useState({
-    nombre: '',
-    cuit: '',
-    email: '',
-    telefono: '',
-    direccion: '',
-  })
+  const { id } = useParams()
+  const [form, setForm] = useState(formVacio)
   const [errores, setErrores] = useState({})
   const [guardando, setGuardando] = useState(false)
+  const [cargando, setCargando] = useState(Boolean(id))
+  const [noEncontrada, setNoEncontrada] = useState(false)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!id) return
+
+    let activa = true
+    setCargando(true)
+    setNoEncontrada(false)
+
+    obtenerEmpresa(id)
+      .then(({ data }) => {
+        if (!activa) return
+        setForm({
+          nombre: data.nombre ?? '',
+          cuit: data.cuit ?? '',
+          email: data.email ?? '',
+          telefono: data.telefono ?? '',
+          direccion: data.direccion ?? '',
+        })
+      })
+      .catch((error) => {
+        if (!activa) return
+        if (error.response?.status === 404) setNoEncontrada(true)
+      })
+      .finally(() => {
+        if (activa) setCargando(false)
+      })
+
+    return () => {
+      activa = false
+    }
+  }, [id])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -45,20 +81,45 @@ function EmpresaForm() {
         telefono: form.telefono.trim() ? form.telefono : null,
         direccion: form.direccion.trim() ? form.direccion : null,
       }
-      await crearEmpresa(datosEmpresa)
+      if (id) {
+        await actualizarEmpresa(id, datosEmpresa)
+      } else {
+        await crearEmpresa(datosEmpresa)
+      }
       navigate('/')
     } catch (error) {
       setErrores({
-        api: error.response?.data?.mensaje || 'Error al crear la empresa',
+        api:
+          error.response?.data?.mensaje ||
+          (id ? 'Error al editar la empresa' : 'Error al crear la empresa'),
       })
     } finally {
       setGuardando(false)
     }
   }
 
+  if (noEncontrada) {
+    return (
+      <section className="empresa-form-page">
+        <h1>Empresa no encontrada</h1>
+        <button type="button" className="button-secondary" onClick={() => navigate('/')}>
+          Volver al listado
+        </button>
+      </section>
+    )
+  }
+
+  if (cargando) {
+    return (
+      <section className="empresa-form-page">
+        <p role="status">Cargando empresa...</p>
+      </section>
+    )
+  }
+
   return (
     <section className="empresa-form-page">
-      <h1>Nueva empresa</h1>
+      <h1>{id ? 'Editar empresa' : 'Nueva empresa'}</h1>
       <form className="empresa-form" onSubmit={handleSubmit} noValidate>
         {campos.map(({ name, label, type = 'text', required }) => (
           <div className="form-field" key={name}>
@@ -90,7 +151,7 @@ function EmpresaForm() {
             Cancelar
           </button>
           <button type="submit" disabled={guardando}>
-            {guardando ? 'Guardando…' : 'Crear empresa'}
+            {guardando ? 'Guardando…' : id ? 'Guardar cambios' : 'Crear empresa'}
           </button>
         </div>
       </form>
