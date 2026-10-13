@@ -1,6 +1,15 @@
-// Página 404 del front → issue #4 (lucas)
+import { Link } from 'react-router-dom'
+
 function NoEncontrada() {
-  return <h1>Página no encontrada</h1>
+  return (
+    <section className="not-found">
+      <h1>404</h1>
+      <p>La página que buscás no existe.</p>
+      <Link to="/" className="back-link">
+        Volver a Empresas
+      </Link>
+    </section>
+  )
 }
 
 export default NoEncontrada
