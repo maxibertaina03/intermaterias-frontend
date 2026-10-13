@@ -25,6 +25,7 @@ function EmpresaForm() {
   const [guardando, setGuardando] = useState(false)
   const [cargando, setCargando] = useState(Boolean(id))
   const [noEncontrada, setNoEncontrada] = useState(false)
+  const [errorCarga, setErrorCarga] = useState('')
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -33,6 +34,7 @@ function EmpresaForm() {
     let activa = true
     setCargando(true)
     setNoEncontrada(false)
+    setErrorCarga('')
 
     obtenerEmpresa(id)
       .then(({ data }) => {
@@ -47,7 +49,11 @@ function EmpresaForm() {
       })
       .catch((error) => {
         if (!activa) return
-        if (error.response?.status === 404) setNoEncontrada(true)
+        if (error.response?.status === 404) {
+          setNoEncontrada(true)
+        } else {
+          setErrorCarga('No se pudo cargar la empresa. Intenta nuevamente.')
+        }
       })
       .finally(() => {
         if (activa) setCargando(false)
@@ -102,6 +108,18 @@ function EmpresaForm() {
     return (
       <section className="empresa-form-page">
         <h1>Empresa no encontrada</h1>
+        <button type="button" className="button-secondary" onClick={() => navigate('/')}>
+          Volver al listado
+        </button>
+      </section>
+    )
+  }
+
+  if (errorCarga) {
+    return (
+      <section className="empresa-form-page">
+        <h1>Editar empresa</h1>
+        <p className="form-error api-error" role="alert">{errorCarga}</p>
         <button type="button" className="button-secondary" onClick={() => navigate('/')}>
           Volver al listado
         </button>
