@@ -3,6 +3,10 @@
 Frontend del sistema de eventos hecho con **React + Vite**.
 Consume la API de [intermaterias-backend](https://github.com/maxibertaina03/intermaterias-backend).
 
+**Dominio:** gestión de eventos de un **centro de estudiantes** (por ejemplo, la fiesta de
+bienvenida), desde que alguien pide un evento hasta que se realiza o se cancela.
+Explicación completa: [00-dominio.md](https://github.com/maxibertaina03/intermaterias-infra/blob/develop/docs/si/00-dominio.md).
+
 ## Instalación
 
 ```bash
