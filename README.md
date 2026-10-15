@@ -1,32 +1,44 @@
 # Intermaterias — Frontend
 
-Frontend del sistema de eventos hecho con **React + Vite**.
-Consume la API de [intermaterias-backend](https://github.com/maxibertaina03/intermaterias-backend).
+Frontend del sistema de eventos hecho con **React + Vite**. Consume la API de [intermaterias-backend](https://github.com/maxibertaina03/intermaterias-backend).
 
-## Instalación
+**Dominio:** una **empresa que organiza eventos para centros de estudiantes** (por ejemplo, la
+fiesta de bienvenida), desde que el centro pide un evento hasta que se realiza o se cancela.
+Explicación completa: [00-dominio.md](https://github.com/maxibertaina03/intermaterias-infra/blob/develop/docs/si/00-dominio.md).
+
+## Desarrollo local
 
 ```bash
-git clone https://github.com/maxibertaina03/intermaterias-frontend.git
-cd intermaterias-frontend
 npm install
 cp .env.example .env
+npm run dev
 ```
 
-`VITE_API_URL` apunta a la API (por defecto `http://localhost:3000/api`). En el código se usa así:
+`VITE_API_URL` define la URL de la API y, de forma local, suele ser `http://localhost:3000/api`. También puedes generar el build de producción con `npm run build`; Vite lo deja en `dist/`.
 
-```js
-const API_URL = import.meta.env.VITE_API_URL;
-fetch(`${API_URL}/empresas`);
-```
+## Construir y ejecutar con Docker
 
-## Ejecutar
+La imagen compila React durante la etapa de build y sirve los archivos estáticos con nginx.
 
 ```bash
-npm run dev       # http://localhost:5173
-npm run build     # build de producción en dist/
+docker build -t intermaterias-front .
+docker run --rm -p 8080:80 intermaterias-front
 ```
 
-Para que funcione con datos, el backend tiene que estar corriendo (`npm run dev` en intermaterias-backend).
+Abre <http://localhost:8080> y <http://localhost:8080/empresas/nueva>. La segunda ruta también carga directamente gracias al fallback de nginx a `index.html`.
+
+El build usa `VITE_API_URL=/api` por defecto para que las llamadas de la aplicación usen la ruta del balanceador. Para cambiarla al construir la imagen:
+
+```bash
+docker build --build-arg VITE_API_URL=/api -t intermaterias-front .
+```
+
+Vite incorpora esta variable en los archivos estáticos durante el build; no se puede cambiar al iniciar el contenedor.
+
+## Estructura y componentes
+
+Usamos **shadcn/ui + Tailwind**. Antes de programar leé **[ESTRUCTURA.md](ESTRUCTURA.md)**: carpetas por área,
+reglas para no pisarnos y el patrón a seguir (ejemplo de referencia: `src/features/empresas/`).
 
 ## Trabajo en grupo
 

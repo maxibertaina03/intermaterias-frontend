@@ -1,122 +1,52 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { Route, Routes } from "react-router-dom";
+import AppLayout from "@/components/layout/AppLayout";
+import NoEncontrada from "@/pages/NoEncontrada";
+// Seguimiento (Tomi)
+import PendientesPage from "@/features/tareas/PendientesPage";
+import TareasPage from "@/features/tareas/TareasPage";
+// Encargos (Lucas / Tomi)
+import EventosPage from "@/features/eventos/EventosPage";
+import EventoFormPage from "@/features/eventos/EventoFormPage";
+import EventoDetallePage from "@/features/eventos/EventoDetallePage";
+import ClientesPage from "@/features/clientes/ClientesPage";
+import ClienteDetallePage from "@/features/clientes/ClienteDetallePage";
+import PropuestasPage from "@/features/propuestas/PropuestasPage";
+// Catálogos (Facu)
+import ServiciosPage from "@/features/catalogos/ServiciosPage";
+import ProveedoresPage from "@/features/catalogos/ProveedoresPage";
+import SedesPage from "@/features/catalogos/SedesPage";
+import TiposEventoPage from "@/features/catalogos/TiposEventoPage";
+// Administración (ejemplo de referencia)
+import EmpresasPage from "@/features/empresas/EmpresasPage";
+import EmpresaFormPage from "@/features/empresas/EmpresaFormPage";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+// Todas las rutas ya están registradas: cada uno completa su página, sin tocar este archivo.
+export default function App() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <Routes>
+      <Route element={<AppLayout />}>
+        <Route path="/" element={<PendientesPage />} />
+        <Route path="/tareas" element={<TareasPage />} />
 
-      <div className="ticks"></div>
+        <Route path="/eventos" element={<EventosPage />} />
+        <Route path="/eventos/nuevo" element={<EventoFormPage />} />
+        <Route path="/eventos/:id" element={<EventoDetallePage />} />
+        <Route path="/eventos/:id/editar" element={<EventoFormPage />} />
+        <Route path="/clientes" element={<ClientesPage />} />
+        <Route path="/clientes/:id" element={<ClienteDetallePage />} />
+        <Route path="/propuestas" element={<PropuestasPage />} />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <Route path="/servicios" element={<ServiciosPage />} />
+        <Route path="/proveedores" element={<ProveedoresPage />} />
+        <Route path="/sedes" element={<SedesPage />} />
+        <Route path="/tipos-evento" element={<TiposEventoPage />} />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        <Route path="/empresas" element={<EmpresasPage />} />
+        <Route path="/empresas/nueva" element={<EmpresaFormPage />} />
+        <Route path="/empresas/:id/editar" element={<EmpresaFormPage />} />
+
+        <Route path="*" element={<NoEncontrada />} />
+      </Route>
+    </Routes>
+  );
 }
-
-export default App
