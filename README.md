@@ -35,6 +35,11 @@ docker build --build-arg VITE_API_URL=/api -t intermaterias-front .
 
 Vite incorpora esta variable en los archivos estáticos durante el build; no se puede cambiar al iniciar el contenedor.
 
+## Estructura y componentes
+
+Usamos **shadcn/ui + Tailwind**. Antes de programar leé **[ESTRUCTURA.md](ESTRUCTURA.md)**: carpetas por área,
+reglas para no pisarnos y el patrón a seguir (ejemplo de referencia: `src/features/empresas/`).
+
 ## Trabajo en grupo
 
 Ver [CONTRIBUTING.md](CONTRIBUTING.md) para el flujo de ramas (`masita` / `facu` / `tomi` / `lucas` → `develop` → `main`).
