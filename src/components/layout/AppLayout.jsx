@@ -3,6 +3,7 @@ import {
   Building2, CalendarDays, ClipboardList, FileText, LayoutDashboard, MapPin, Shapes, Truck, Users, Wrench,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import MenuUsuario from "@/features/auth/MenuUsuario";
 
 // Menú lateral: agrupado por las áreas del sistema.
 // Si agregás una página nueva al menú, agregala acá (y su ruta en App.jsx).
@@ -53,8 +54,9 @@ export default function AppLayout() {
         </nav>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
-        {/* Barra superior: acá va el usuario y "salir" cuando esté el login (Clerk) */}
-        <header className="bg-background flex h-14 items-center justify-end border-b px-6" />
+        <header className="bg-background flex h-14 items-center justify-end border-b px-6">
+          <MenuUsuario />
+        </header>
         <main className="mx-auto w-full max-w-6xl flex-1 p-6">
           <Outlet />
         </main>

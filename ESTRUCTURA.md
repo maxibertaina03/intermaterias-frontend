@@ -81,6 +81,23 @@ inventados: así todo se ve igual. Colores siempre con los del tema (`text-muted
 | `toast` de `sonner` | Avisos: `toast.success("Guardado")`, `toast.error(mensajeDeError(e))` |
 | `formatearPesos`, `formatearFecha` (`@/lib/formato`) | Mostrar importes y fechas |
 
+### Usuario logueado y roles
+```js
+import { useUsuario } from "@/features/auth/UsuarioContext";
+import SoloRol from "@/features/auth/SoloRol";
+
+const { usuario, tieneRol } = useUsuario();   // usuario.nombre, usuario.roles, usuario.id_empresa
+
+<SoloRol roles={["responsable_propuesta"]}>
+  <Button>Aceptar propuesta</Button>          {/* solo lo ve quien tiene ese rol */}
+</SoloRol>
+```
+Roles: `atencion_cliente` · `responsable_propuesta` · `responsable_organizacion` · `integrante`.
+Ocultar un botón es comodidad: **la API igual valida el rol** (`requireRol`).
+
+**Login:** con `VITE_CLERK_PUBLISHABLE_KEY` en el `.env` se usa Clerk. **Sin la clave**, la app entra directo en
+**modo desarrollo** con el usuario que diga `DEV_ID_USUARIO` en el backend: no hace falta tener cuenta para programar.
+
 ### Patrón de una página (resumen de `features/empresas/`)
 1. Estados `datos`, `cargando`, `error`.
 2. `useEffect` que llama al service y guarda `response.data`.
