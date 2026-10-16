@@ -1,14 +1,22 @@
-import { SignIn } from "@clerk/react";
+import { useState } from "react";
+import AuthLayout from "./AuthLayout";
+import CrearCuenta from "./CrearCuenta";
+import IniciarSesion from "./IniciarSesion";
+import RecuperarContrasena from "./RecuperarContrasena";
 
-// Pantalla de inicio de sesión (componente de Clerk, en español).
+const PANTALLAS = {
+  login: { titulo: "Iniciá sesión", descripcion: "Entrá con el email que te registró la empresa.", Componente: IniciarSesion },
+  registro: { titulo: "Creá tu cuenta", descripcion: "Solo para el personal dado de alta por la empresa.", Componente: CrearCuenta },
+  recuperar: { titulo: "Recuperá tu contraseña", descripcion: "Te mandamos un código por email para crear una nueva.", Componente: RecuperarContrasena },
+};
+
+// Login propio (con los hooks de Clerk y componentes de shadcn): sin las pantallas por defecto de Clerk.
 export default function LoginPage() {
+  const [pantalla, setPantalla] = useState("login");
+  const { titulo, descripcion, Componente } = PANTALLAS[pantalla];
   return (
-    <div className="bg-muted/30 flex min-h-screen flex-col items-center justify-center gap-6 p-6">
-      <div className="text-center">
-        <p className="text-xl font-semibold">Eventos estudiantiles</p>
-        <p className="text-muted-foreground text-sm">Sistema de gestión para el personal de la organizadora</p>
-      </div>
-      <SignIn routing="hash" />
-    </div>
+    <AuthLayout titulo={titulo} descripcion={descripcion}>
+      <Componente key={pantalla} irA={setPantalla} />
+    </AuthLayout>
   );
 }
