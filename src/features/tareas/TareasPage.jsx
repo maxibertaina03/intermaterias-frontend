@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
@@ -30,15 +30,14 @@ export default function TareasPage() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
 
-  const cargar = () => {
-    setCargando(true);
+  const cargar = useCallback(() => {
     obtenerTareas()
       .then(({ data }) => setTareas(data))
       .catch((e) => setError(mensajeDeError(e, "No se pudieron cargar las tareas")))
       .finally(() => setCargando(false));
-  };
+  }, []);
 
-  useEffect(() => { cargar(); }, []);
+  useEffect(() => { cargar(); }, [cargar]);
 
   const responsables = useMemo(() => [...new Set(tareas.map((tarea) => tarea.nombre_responsable).filter(Boolean))].sort(), [tareas]);
   const filtradas = tareas.filter((tarea) =>
@@ -102,7 +101,7 @@ export default function TareasPage() {
                   </Link></TableCell>
                   <TableCell>{tarea.nombre_responsable || "Sin asignar"}</TableCell>
                   <TableCell className={vencida(tarea) ? "font-medium text-destructive" : ""}>
-                    {tarea.fecha_prevista ? formatearFecha(tarea.fecha_prevista)}{vencida(tarea) ? " · Vencida" : ""}
+                    {tarea.fecha_prevista ? formatearFecha(tarea.fecha_prevista) : "Sin fecha"}{vencida(tarea) ? " · Vencida" : ""}
                   </TableCell>
                   <TableCell><EstadoBadge estado={tarea.estado} /></TableCell>
                   <TableCell className="space-x-1 text-right">

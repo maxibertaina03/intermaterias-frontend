@@ -26,8 +26,6 @@ export default function PropuestasPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setCargando(true);
-    setError("");
     obtenerPropuestas(estado === "todas" ? undefined : { estado })
       .then(({ data }) => setPropuestas(data))
       .catch((e) => setError(mensajeDeError(e, "No se pudieron cargar las propuestas")))
@@ -39,7 +37,11 @@ export default function PropuestasPage() {
       <PageHeader titulo="Propuestas" descripcion="Presupuestos enviados y su estado de respuesta." />
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <span className="text-sm text-muted-foreground">Filtrar por estado</span>
-        <Select value={estado} onValueChange={setEstado}>
+        <Select value={estado} onValueChange={(value) => {
+          setCargando(true);
+          setError("");
+          setEstado(value);
+        }}>
           <SelectTrigger aria-label="Filtrar propuestas por estado"><SelectValue /></SelectTrigger>
           <SelectContent>
             {ESTADOS.map(([value, label]) => <SelectItem key={value} value={value}>{label}</SelectItem>)}
@@ -72,7 +74,7 @@ export default function PropuestasPage() {
                     </TableCell>
                     <TableCell>{propuesta.nombre_cliente}</TableCell>
                     <TableCell><EstadoBadge estado={propuesta.estado} /></TableCell>
-                    <TableCell>{propuesta.fecha_presentacion ? formatearFecha(new Date(new Date(propuesta.fecha_presentacion).getTime() + propuesta.vigencia_dias * 86400000)) : "—"}</TableCell>
+                    <TableCell>{propuesta.fecha_vencimiento ? formatearFecha(propuesta.fecha_vencimiento) : "—"}</TableCell>
                     <TableCell className="text-right">{formatearPesos(propuesta.total)}</TableCell>
                   </TableRow>
                 ))}

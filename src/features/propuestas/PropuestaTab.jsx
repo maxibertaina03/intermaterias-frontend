@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,7 @@ import { mensajeDeError } from "@/lib/api";
 import { formatearFecha, formatearPesos } from "@/lib/formato";
 import {
   aceptarPropuesta,
+  actualizarItem,
   actualizarPropuesta,
   agregarItem,
   crearPropuesta,
@@ -41,7 +42,7 @@ export default function PropuestaTab({ evento }) {
   const [motivo, setMotivo] = useState("");
   const [guardando, setGuardando] = useState(false);
 
-  const cargarPropuesta = useCallback(async () => {
+  const cargarPropuesta = async () => {
     if (!idEvento) return;
     try {
       const { data } = await obtenerPropuestaDeEvento(idEvento);
@@ -59,14 +60,38 @@ export default function PropuestaTab({ evento }) {
     } finally {
       setCargando(false);
     }
-  }, [idEvento]);
+  };
 
   useEffect(() => {
-    cargarPropuesta();
+    let activa = true;
+    obtenerPropuestaDeEvento(idEvento)
+      .then(({ data }) => {
+        if (!activa) return;
+        setPropuesta(data);
+        setDescuento(String(data.descuento ?? 0));
+        setCondiciones(data.condiciones ?? "");
+      })
+      .catch((e) => {
+        if (!activa) return;
+        if (e.response?.status === 404) {
+          setPropuesta(null);
+          setError("");
+        } else {
+          setError(mensajeDeError(e, "No se pudo cargar la propuesta"));
+        }
+      })
+      .finally(() => {
+        if (activa) setCargando(false);
+      });
     obtenerServicios()
-      .then(({ data }) => setServicios(data.filter((item) => item.activo !== false)))
-      .catch((e) => setError(mensajeDeError(e, "No se pudieron cargar los servicios")));
-  }, [cargarPropuesta]);
+      .then(({ data }) => {
+        if (activa) setServicios(data.filter((item) => item.activo !== false));
+      })
+      .catch((e) => {
+        if (activa) setError(mensajeDeError(e, "No se pudieron cargar los servicios"));
+      });
+    return () => { activa = false; };
+  }, [idEvento]);
 
   const ejecutar = async (accion, mensaje) => {
     setGuardando(true);
@@ -81,10 +106,7 @@ export default function PropuestaTab({ evento }) {
     }
   };
 
-  const handleCrear = () => ejecutar(async () => {
-    await crearPropuesta(idEvento);
-    await cargarPropuesta();
-  }, "Se creó la propuesta");
+  const handleCrear = () => ejecutar(() => crearPropuesta(idEvento), "Se creó la propuesta");
 
   const handleGuardar = () => ejecutar(
     () => actualizarPropuesta(propuesta.id_propuesta, { descuento: Number(descuento), condiciones: condiciones.trim() || null }),
@@ -94,7 +116,9 @@ export default function PropuestaTab({ evento }) {
   const handleAgregarItem = (event) => {
     event.preventDefault();
     const seleccionado = servicios.find((item) => String(item.id_servicio) === servicio);
-    if (!seleccionado || Number(cantidad) < 1 || Number(precio || seleccionado.precio_referencia) < 0) {
+    const precioFinal = precio === "" ? Number(seleccionado?.precio_referencia) : Number(precio);
+    if (!seleccionado || !Number.isInteger(Number(cantidad)) || Number(cantidad) < 1 ||
+      !Number.isFinite(precioFinal) || precioFinal < 0) {
       toast.error("Completá un servicio, cantidad y precio válidos");
       return;
     }
@@ -103,7 +127,7 @@ export default function PropuestaTab({ evento }) {
         id_servicio: Number(servicio),
         descripcion: descripcion.trim() || null,
         cantidad: Number(cantidad),
-        precio_unitario: Number(precio || seleccionado.precio_referencia)
+        precio_unitario: precioFinal
       });
       setServicio("");
       setCantidad("1");
@@ -117,19 +141,38 @@ export default function PropuestaTab({ evento }) {
     "Se quitó el servicio"
   );
 
+  const editarItemLocal = (idItem, campo, valor) => {
+    setPropuesta((actual) => ({
+      ...actual,
+      items: actual.items.map((item) => item.id_item === idItem ? { ...item, [campo]: valor } : item)
+    }));
+  };
+
+  const handleGuardarItem = (item) => {
+    if (!Number.isInteger(Number(item.cantidad)) || Number(item.cantidad) < 1 ||
+      !Number.isFinite(Number(item.precio_unitario)) || Number(item.precio_unitario) < 0) {
+      toast.error("La cantidad debe ser mayor a cero y el precio no puede ser negativo");
+      return;
+    }
+    return ejecutar(
+      () => actualizarItem(propuesta.id_propuesta, item.id_item, {
+        cantidad: Number(item.cantidad),
+        precio_unitario: Number(item.precio_unitario)
+      }),
+      "Se actualizó el servicio"
+    );
+  };
+
   const handleTransicion = (accion, mensaje) => ejecutar(accion, mensaje);
   const editable = propuesta && ESTADOS_EDITABLES.includes(propuesta.estado);
 
   if (cargando) return <Cargando />;
   if (error) return <MensajeError>{error}</MensajeError>;
   if (!propuesta) {
-    return (
-      <Vacio titulo="Todavía no hay una propuesta para este evento">
-        <span className="mt-3 inline-flex">
-          <Button onClick={handleCrear} disabled={guardando}><Plus /> Crear propuesta</Button>
-        </span>
-      </Vacio>
-    );
+    return <div className="space-y-4">
+      <Vacio titulo="Todavía no hay una propuesta para este evento">Creá una para comenzar a presupuestar.</Vacio>
+      <div className="flex justify-center"><Button onClick={handleCrear} disabled={guardando}><Plus /> Crear propuesta</Button></div>
+    </div>;
   }
 
   return (
@@ -148,9 +191,8 @@ export default function PropuestaTab({ evento }) {
             </div>
             <div>
               <Label>Vencimiento</Label>
-              <p className="mt-2 text-sm">{propuesta.fecha_presentacion
-                ? formatearFecha(new Date(new Date(propuesta.fecha_presentacion).getTime() + propuesta.vigencia_dias * 86400000))
-                : "Se define al presentar"}</p>
+              <p className="mt-2 text-sm">{propuesta.fecha_vencimiento
+                ? formatearFecha(propuesta.fecha_vencimiento) : "Se define al presentar"}</p>
             </div>
             <div className="sm:col-span-2">
               <Label htmlFor="condiciones">Condiciones</Label>
@@ -171,7 +213,7 @@ export default function PropuestaTab({ evento }) {
             <Table>
               <TableHeader><TableRow>
                 <TableHead>Servicio</TableHead><TableHead>Descripción</TableHead>
-                <TableHead className="text-right">Cantidad</TableHead><TableHead className="text-right">Precio</TableHead>
+                <TableHead className="text-right">Cantidad</TableHead><TableHead className="text-right">Precio unitario</TableHead>
                 {editable && <TableHead />}
               </TableRow></TableHeader>
               <TableBody>
@@ -179,9 +221,16 @@ export default function PropuestaTab({ evento }) {
                   <TableRow key={item.id_item}>
                     <TableCell className="font-medium">{item.nombre_servicio}</TableCell>
                     <TableCell>{item.descripcion || "—"}</TableCell>
-                    <TableCell className="text-right">{item.cantidad}</TableCell>
-                    <TableCell className="text-right">{formatearPesos(item.precio_unitario)}</TableCell>
-                    {editable && <TableCell className="text-right">
+                    <TableCell className="text-right">{editable
+                      ? <Input aria-label={`Cantidad de ${item.nombre_servicio}`} className="ml-auto w-24 text-right" type="number" min="1"
+                        value={item.cantidad} onChange={(event) => editarItemLocal(item.id_item, "cantidad", event.target.value)} />
+                      : item.cantidad}</TableCell>
+                    <TableCell className="text-right">{editable
+                      ? <Input aria-label={`Precio de ${item.nombre_servicio}`} className="ml-auto w-36 text-right" type="number" min="0" step="0.01"
+                        value={item.precio_unitario} onChange={(event) => editarItemLocal(item.id_item, "precio_unitario", event.target.value)} />
+                      : formatearPesos(item.precio_unitario)}</TableCell>
+                    {editable && <TableCell className="space-x-1 text-right">
+                      <Button variant="outline" size="sm" onClick={() => handleGuardarItem(item)} disabled={guardando}>Guardar</Button>
                       <ConfirmDialog titulo="¿Quitar este servicio?" descripcion="El total de la propuesta se actualizará."
                         textoConfirmar="Quitar" onConfirmar={() => handleEliminarItem(item.id_item)}>
                         <Button variant="ghost" size="sm" aria-label="Quitar servicio"><Trash2 /></Button>

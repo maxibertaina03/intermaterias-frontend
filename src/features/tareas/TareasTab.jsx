@@ -24,20 +24,23 @@ export default function TareasTab({ evento }) {
   const [error, setError] = useState("");
   const [guardando, setGuardando] = useState(false);
 
-  const cargar = async () => {
-    if (!idEvento) return;
-    try {
-      const { data } = await obtenerTareas({ evento: idEvento });
-      setTareas(data);
-      setError("");
-    } catch (e) {
-      setError(mensajeDeError(e, "No se pudieron cargar las tareas del evento"));
-    } finally {
-      setCargando(false);
-    }
-  };
-
-  useEffect(() => { cargar(); }, [idEvento]);
+  useEffect(() => {
+    if (!idEvento) return undefined;
+    let activa = true;
+    obtenerTareas({ evento: idEvento })
+      .then(({ data }) => {
+        if (!activa) return;
+        setTareas(data);
+        setError("");
+      })
+      .catch((e) => {
+        if (activa) setError(mensajeDeError(e, "No se pudieron cargar las tareas del evento"));
+      })
+      .finally(() => {
+        if (activa) setCargando(false);
+      });
+    return () => { activa = false; };
+  }, [idEvento]);
 
   const handleCrear = async (event) => {
     event.preventDefault();
@@ -47,7 +50,8 @@ export default function TareasTab({ evento }) {
       await crearTarea({ id_evento: idEvento, descripcion: descripcion.trim(), fecha_prevista: fecha || null });
       setDescripcion("");
       setFecha("");
-      await cargar();
+      const { data } = await obtenerTareas({ evento: idEvento });
+      setTareas(data);
       toast.success("Se creó la tarea");
     } catch (e) {
       toast.error(mensajeDeError(e, "No se pudo crear la tarea"));

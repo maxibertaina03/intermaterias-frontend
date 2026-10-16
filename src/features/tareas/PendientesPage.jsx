@@ -23,6 +23,9 @@ const EnlaceEvento = ({ id, nombre }) => (
   <Link className="font-medium text-primary underline-offset-4 hover:underline" to={`/eventos/${id}`}>{nombre}</Link>
 );
 
+const fechaYaPaso = (fecha) =>
+  fecha && new Date(`${fecha.slice(0, 10)}T00:00:00`) < new Date(new Date().toDateString());
+
 export default function PendientesPage() {
   const [pendientes, setPendientes] = useState({ servicios: [], tareas: [], propuestas: [] });
   const [cargando, setCargando] = useState(true);
@@ -59,7 +62,7 @@ export default function PendientesPage() {
           <TarjetaPendientes titulo="Tareas próximas o vencidas" icono={ClipboardCheck} cantidad={pendientes.tareas.length}>
             {pendientes.tareas.length === 0 ? <p className="text-sm text-muted-foreground">Sin tareas para esta semana.</p> :
               <ul className="space-y-3">{pendientes.tareas.map((item) => {
-                const atrasada = item.fecha_prevista && new Date(`${item.fecha_prevista.slice(0, 10)}T00:00:00`) < new Date(new Date().toDateString());
+                const atrasada = fechaYaPaso(item.fecha_prevista);
                 return <li key={item.id_tarea} className="space-y-1 border-b pb-3 last:border-0 last:pb-0">
                   <p className={atrasada ? "font-medium text-destructive" : "font-medium"}>{item.descripcion}</p>
                   <p className="text-sm text-muted-foreground"><EnlaceEvento id={item.id_evento} nombre={item.nombre_evento} />
