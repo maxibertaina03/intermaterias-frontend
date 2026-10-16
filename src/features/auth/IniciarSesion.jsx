@@ -6,10 +6,10 @@ import { MensajeError } from "@/components/common/Estados";
 import CampoAuth from "./CampoAuth";
 import { errorGlobal, traducir } from "./erroresClerk";
 
-// Email + contraseña. Si Clerk pide verificar el dispositivo, pide el código que llega por email.
+// Usuario + contraseña (Clerk). Si Clerk pidiera verificar el dispositivo, pide el código.
 export default function IniciarSesion({ irA }) {
   const { signIn, errors, fetchStatus } = useSignIn();
-  const [email, setEmail] = useState("");
+  const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [codigo, setCodigo] = useState("");
   const [pideCodigo, setPideCodigo] = useState(false);
@@ -24,7 +24,7 @@ export default function IniciarSesion({ irA }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    const { error: err } = await signIn.password({ emailAddress: email.trim(), password });
+    const { error: err } = await signIn.password({ identifier: usuario.trim(), password });
     if (err) return;                                    // los errores de campo los muestra el formulario
     if (signIn.status === "complete") return terminar();
     if (signIn.status === "needs_client_trust" || signIn.status === "needs_second_factor") {
@@ -48,7 +48,7 @@ export default function IniciarSesion({ irA }) {
     return (
       <form onSubmit={handleCodigo} className="grid gap-4">
         <p className="text-muted-foreground text-sm">
-          Te mandamos un código a <span className="text-foreground font-medium">{email}</span> para confirmar que sos vos.
+          Te mandamos un código para confirmar que sos vos.
         </p>
         <CampoAuth id="codigo" label="Código" inputMode="numeric" autoComplete="one-time-code" autoFocus
           value={codigo} onChange={(e) => setCodigo(e.target.value)} error={traducir(errors.fields.code)} />
@@ -61,13 +61,12 @@ export default function IniciarSesion({ irA }) {
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-4">
-      <CampoAuth id="email" label="Email" type="email" autoComplete="email" autoFocus placeholder="nombre@empresa.com"
-        value={email} onChange={(e) => setEmail(e.target.value)} error={traducir(errors.fields.identifier)} />
+      <CampoAuth id="usuario" label="Usuario" autoComplete="username" autoFocus autoCapitalize="none" spellCheck={false}
+        value={usuario} onChange={(e) => setUsuario(e.target.value)} error={traducir(errors.fields.identifier)} />
       <CampoAuth id="password" label="Contraseña" type="password" autoComplete="current-password"
-        value={password} onChange={(e) => setPassword(e.target.value)} error={traducir(errors.fields.password)}
-        extra={<button type="button" onClick={() => irA("recuperar")} className="text-muted-foreground hover:text-foreground text-sm underline-offset-4 hover:underline">¿Olvidaste tu contraseña?</button>} />
+        value={password} onChange={(e) => setPassword(e.target.value)} error={traducir(errors.fields.password)} />
       {(error || errorGlobal(errors)) && <MensajeError>{error || errorGlobal(errors)}</MensajeError>}
-      <Button type="submit" disabled={cargando || !email || !password}>
+      <Button type="submit" disabled={cargando || !usuario || !password}>
         {cargando && <Loader2 className="animate-spin" />} Iniciar sesión
       </Button>
       <p className="text-muted-foreground text-center text-sm">

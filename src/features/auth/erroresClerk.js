@@ -1,12 +1,14 @@
 // La API de Clerk devuelve los errores en inglés: acá se traducen por código.
 const MENSAJES = {
-  form_identifier_not_found: "No hay ninguna cuenta con ese email",
+  form_identifier_not_found: "No hay ninguna cuenta con ese usuario",
   form_password_incorrect: "La contraseña es incorrecta",
   form_password_pwned: "Esa contraseña apareció en filtraciones de datos. Elegí otra",
   form_password_length_too_short: "La contraseña tiene que tener al menos 8 caracteres",
   form_password_not_strong_enough: "La contraseña es muy débil",
   form_password_validation_failed: "La contraseña no es válida",
-  form_identifier_exists: "Ya existe una cuenta con ese email",
+  form_identifier_exists: "Ese usuario ya está en uso. Elegí otro",
+  form_username_invalid_character: "El usuario solo puede tener letras, números, guiones y guión bajo",
+  form_username_invalid_length: "El usuario tiene que tener entre 4 y 64 caracteres",
   form_param_format_invalid: "El formato no es válido",
   form_param_nil: "Completá este campo",
   form_param_missing: "Completá este campo",
