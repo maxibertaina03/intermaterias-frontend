@@ -86,7 +86,7 @@ export default function TareasPage() {
       {cargando ? <Cargando /> : error ? <MensajeError>{error}</MensajeError> : filtradas.length === 0 ? (
         <Vacio titulo="No hay tareas para mostrar">Las tareas pendientes de los eventos aparecerán acá.</Vacio>
       ) : (
-        <Card><CardContent className="p-0">
+        <Card><CardContent className="min-w-0 p-0">
           <Table>
             <TableHeader><TableRow>
               <TableHead>Tarea</TableHead><TableHead>Evento</TableHead><TableHead>Responsable</TableHead>
