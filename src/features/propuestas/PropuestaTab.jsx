@@ -33,6 +33,7 @@ export default function PropuestaTab({ evento }) {
   const [servicios, setServicios] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
+  const [errorServicios, setErrorServicios] = useState("");
   const [descuento, setDescuento] = useState("0");
   const [condiciones, setCondiciones] = useState("");
   const [servicio, setServicio] = useState("");
@@ -85,10 +86,12 @@ export default function PropuestaTab({ evento }) {
       });
     obtenerServicios()
       .then(({ data }) => {
-        if (activa) setServicios(data.filter((item) => item.activo !== false));
+        if (!activa) return;
+        setServicios(data.filter((item) => item.activo !== false));
+        setErrorServicios("");
       })
       .catch((e) => {
-        if (activa) setError(mensajeDeError(e, "No se pudieron cargar los servicios"));
+        if (activa) setErrorServicios(mensajeDeError(e, "No se pudieron cargar los servicios"));
       });
     return () => { activa = false; };
   }, [idEvento]);
@@ -170,6 +173,7 @@ export default function PropuestaTab({ evento }) {
   if (error) return <MensajeError>{error}</MensajeError>;
   if (!propuesta) {
     return <div className="space-y-4">
+      {errorServicios && <MensajeError>{errorServicios}</MensajeError>}
       <Vacio titulo="Todavía no hay una propuesta para este evento">Creá una para comenzar a presupuestar.</Vacio>
       <div className="flex justify-center"><Button onClick={handleCrear} disabled={guardando}><Plus /> Crear propuesta</Button></div>
     </div>;
@@ -177,6 +181,7 @@ export default function PropuestaTab({ evento }) {
 
   return (
     <div className="space-y-4">
+      {errorServicios && <MensajeError>{errorServicios}</MensajeError>}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-3">
           <CardTitle className="text-lg">Propuesta #{propuesta.id_propuesta}</CardTitle>
