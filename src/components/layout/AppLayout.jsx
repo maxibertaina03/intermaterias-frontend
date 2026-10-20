@@ -52,6 +52,7 @@ export default function AppLayout() {
             </div>
           ))}
         </nav>
+        <p className="text-muted-foreground px-5 pb-4 text-xs">Versión {import.meta.env.VITE_APP_VERSION}</p>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="bg-background flex h-14 items-center justify-end border-b px-6">
