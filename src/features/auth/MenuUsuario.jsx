@@ -31,18 +31,20 @@ export default function MenuUsuario() {
         </span>
         <span className="hidden leading-tight sm:block">
           <span className="block text-sm font-medium">{usuario.nombre}</span>
-          <span className="text-muted-foreground block text-xs">{usuario.email}</span>
+          <span className="text-muted-foreground block text-xs">{usuario.empresa ?? "Super admin"}</span>
         </span>
         <ChevronDown className="text-muted-foreground size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-64">
         <DropdownMenuLabel className="font-normal">
           <p className="font-medium">{usuario.nombre}</p>
-          <p className="text-muted-foreground text-xs">{usuario.email}</p>
+          <p className="text-muted-foreground text-xs">
+            {usuario.usuario && `@${usuario.usuario} · `}{usuario.empresa ?? "Super admin"}
+          </p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuLabel className="text-muted-foreground text-xs font-normal">
-          Roles: {usuario.roles.map(etiquetaRol).join(", ") || "sin roles"}
+          Roles: {usuario.roles.map(etiquetaRol).join(", ") || (usuario.es_superadmin ? "administra las empresas" : "sin roles")}
           {!usaClerk && " · modo desarrollo"}
         </DropdownMenuLabel>
         {usaClerk && (<><DropdownMenuSeparator /><BotonSalir /></>)}

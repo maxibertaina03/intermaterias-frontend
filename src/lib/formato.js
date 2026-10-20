@@ -38,6 +38,7 @@ export const etiquetaEstado = (estado) => ETIQUETAS[estado] || estado;
 
 // "responsable_propuesta" → "Responsable de propuesta"
 const ROLES = {
+  admin_empresa: "Administrador de la empresa",
   atencion_cliente: "Atención al cliente",
   responsable_propuesta: "Responsable de propuesta",
   responsable_organizacion: "Responsable de organización",
