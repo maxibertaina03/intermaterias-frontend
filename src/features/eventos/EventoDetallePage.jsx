@@ -22,6 +22,7 @@ import PropuestaTab from "@/features/propuestas/PropuestaTab";
 import ServiciosAcordadosTab from "@/features/coordinacion/ServiciosAcordadosTab";
 import TareasTab from "@/features/tareas/TareasTab";
 import CambiosTab from "@/features/eventos/CambiosTab";
+import InvitadosTab from "@/features/invitados/InvitadosTab";
 import { cambiarEstadoEvento, cancelarEvento, obtenerEvento } from "./eventosService";
 
 const ORGANIZACION = ["atencion_cliente", "responsable_organizacion"];
@@ -237,11 +238,13 @@ export default function EventoDetallePage() {
           <TabsTrigger value="servicios">Servicios</TabsTrigger>
           <TabsTrigger value="tareas">Tareas</TabsTrigger>
           <TabsTrigger value="cambios">Cambios</TabsTrigger>
+          <TabsTrigger value="invitados">Invitados</TabsTrigger>
         </TabsList>
         <TabsContent value="propuesta"><PropuestaTab evento={evento} /></TabsContent>
         <TabsContent value="servicios"><ServiciosAcordadosTab evento={evento} /></TabsContent>
         <TabsContent value="tareas"><TareasTab evento={evento} /></TabsContent>
         <TabsContent value="cambios"><CambiosTab evento={evento} /></TabsContent>
+        <TabsContent value="invitados"><InvitadosTab evento={evento} /></TabsContent>
       </Tabs>
     </>
   );
