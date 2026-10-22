@@ -7,6 +7,17 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Agregado
+- Menú según quién entra: el super admin solo ve *Empresas*; los usuarios de una empresa ven sus datos, y *Usuarios* solo el administrador de la empresa.
+- Nombre de la empresa en la barra superior; usuario y empresa en el menú de usuario.
+
+### Cambiado
+- **El menú lateral queda fijo** al bajar en las páginas largas.
+- Las rutas de datos y las de empresas se separan por perfil: quien entra a una que no le corresponde vuelve a su inicio.
+
+### Eliminado
+- El registro público ("Creá tu cuenta"): los usuarios los crea el administrador de cada empresa.
+
 ## [1.0.0] - en preparación
 
 Primera versión completa: todas las pantallas del recorrido de un evento, con login.
