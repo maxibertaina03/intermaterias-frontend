@@ -6,3 +6,4 @@ export const obtenerEmpresa = (id) => api.get(`/empresas/${id}`);
 export const crearEmpresa = (empresa) => api.post("/empresas", empresa);
 export const actualizarEmpresa = (id, empresa) => api.put(`/empresas/${id}`, empresa);
 export const eliminarEmpresa = (id) => api.delete(`/empresas/${id}`);
+export const crearAdministrador = (id, datos) => api.post(`/empresas/${id}/admin`, datos);
