@@ -27,10 +27,11 @@ export default function EventoFormPage() {
   const [form, setForm] = useState(VACIO);
   const [errores, setErrores] = useState({});
   const [clientes, setClientes] = useState([]);
-  const [contactos, setContactos] = useState([]);
+  // Contactos del cliente elegido: se guardan junto al id del cliente para no mostrar los de otro
+  const [contactosDe, setContactosDe] = useState({ id_cliente: "", lista: [] });
   const [tiposEvento, setTiposEvento] = useState([]);
   const [sedes, setSedes] = useState([]);
-  const [cargando, setCargando] = useState(true);
+  const [cargando, setCargando] = useState(Boolean(id)); // solo se carga algo al editar
   const [errorCarga, setErrorCarga] = useState("");
   const [guardando, setGuardando] = useState(false);
 
@@ -47,7 +48,7 @@ export default function EventoFormPage() {
 
   // Datos del evento si se está editando
   useEffect(() => {
-    if (!id) { setCargando(false); return; }
+    if (!id) return;
     obtenerEvento(id)
       .then(({ data }) => setForm({
         id_cliente: String(data.id_cliente),
@@ -66,13 +67,16 @@ export default function EventoFormPage() {
 
   // Contactos del cliente elegido (para el select de contacto)
   useEffect(() => {
-    if (!form.id_cliente) { setContactos([]); return; }
+    if (!form.id_cliente) return;
     let activa = true;
-    obtenerCliente(form.id_cliente)
-      .then(({ data }) => { if (activa) setContactos(data.contactos ?? []); })
-      .catch(() => { if (activa) setContactos([]); });
+    const id_cliente = form.id_cliente;
+    obtenerCliente(id_cliente)
+      .then(({ data }) => { if (activa) setContactosDe({ id_cliente, lista: data.contactos ?? [] }); })
+      .catch(() => { if (activa) setContactosDe({ id_cliente, lista: [] }); });
     return () => { activa = false; };
   }, [form.id_cliente]);
+
+  const contactos = form.id_cliente && contactosDe.id_cliente === form.id_cliente ? contactosDe.lista : [];
 
   const handleChange = (campo) => (valorOEvento) => {
     const valor = valorOEvento?.target ? valorOEvento.target.value : valorOEvento;

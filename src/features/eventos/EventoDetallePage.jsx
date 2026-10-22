@@ -25,6 +25,9 @@ import CambiosTab from "@/features/eventos/CambiosTab";
 import { cambiarEstadoEvento, cancelarEvento, obtenerEvento } from "./eventosService";
 
 const ORGANIZACION = ["atencion_cliente", "responsable_organizacion"];
+// Un evento cerrado no se edita; uno cerrado o con la propuesta no aceptada no se cancela (lo controla la API)
+const CERRADOS = ["realizado", "cancelado"];
+const NO_CANCELABLES = [...CERRADOS, "no_aceptada"];
 
 function Dato({ label, children }) {
   return (
@@ -183,9 +186,11 @@ export default function EventoDetallePage() {
   return (
     <>
       <PageHeader titulo={evento.nombre} descripcion={`Solicitud #${evento.id_evento} · ${evento.nombre_cliente}`}>
-        <SoloRol roles={ORGANIZACION}>
-          <Button variant="outline" asChild><Link to={`/eventos/${id}/editar`}><Pencil /> Editar</Link></Button>
-        </SoloRol>
+        {!CERRADOS.includes(evento.estado) && (
+          <SoloRol roles={ORGANIZACION}>
+            <Button variant="outline" asChild><Link to={`/eventos/${id}/editar`}><Pencil /> Editar</Link></Button>
+          </SoloRol>
+        )}
       </PageHeader>
 
       <Card className="mb-6">
@@ -225,7 +230,7 @@ export default function EventoDetallePage() {
           {(evento.estado === "confirmado" || evento.estado === "en_preparacion") && (
             <CerrarEventoDialog onConfirmar={handleCerrar} />
           )}
-          {evento.estado !== "cancelado" && evento.estado !== "realizado" && (
+          {!NO_CANCELABLES.includes(evento.estado) && (
             <CancelarEventoDialog onConfirmar={handleCancelar} />
           )}
         </div>
