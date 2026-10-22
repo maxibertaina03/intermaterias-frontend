@@ -35,3 +35,12 @@ const ETIQUETAS = {
   inactiva: "Inactiva"
 };
 export const etiquetaEstado = (estado) => ETIQUETAS[estado] || estado;
+
+// "responsable_propuesta" → "Responsable de propuesta"
+const ROLES = {
+  atencion_cliente: "Atención al cliente",
+  responsable_propuesta: "Responsable de propuesta",
+  responsable_organizacion: "Responsable de organización",
+  integrante: "Integrante"
+};
+export const etiquetaRol = (rol) => ROLES[rol] || rol;
