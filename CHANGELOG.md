@@ -7,11 +7,17 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.0.0] - 2026-10-22
+
+Cada empresa entra con sus propios usuarios y ve solo lo suyo, y los eventos tienen invitados con confirmación y pago.
+
 ### Agregado
 - Alta del administrador inicial desde cada empresa para el super admin (#32).
 - Página **Usuarios** para listar, crear y editar cuentas, roles y estado de acceso del equipo de la empresa (#32).
 - Menú según quién entra: el super admin solo ve *Empresas*; los usuarios de una empresa ven sus datos, y *Usuarios* solo el administrador de la empresa.
 - Nombre de la empresa en la barra superior; usuario y empresa en el menú de usuario.
+- **Pantalla pública del invitado** (`/invitacion/:token`, sin iniciar sesión): datos del evento y formulario con nombre, apellido, si va, medio de pago y comprobante opcional (PDF, JPG o PNG hasta 5 MB) (#31).
+- **Pestaña Invitados** en el detalle del evento: generar y copiar el link, precio y fecha límite, respuestas con totales, ver el comprobante y marcar el pago como verificado (#31).
 
 ### Cambiado
 - **El menú lateral queda fijo** al bajar en las páginas largas.
@@ -51,7 +57,8 @@ Primera versión completa: todas las pantallas del recorrido de un evento, con l
 - CRUD de empresas con navbar, página 404 y estilos generales.
 - `Dockerfile` para correr el front en la infraestructura.
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v1.0.1...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.0...develop
+[2.0.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v1.0.1...v2.0.0
 [1.0.1]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/maxibertaina03/intermaterias-frontend/releases/tag/v0.1.0
