@@ -7,7 +7,7 @@ import CampoAuth from "./CampoAuth";
 import { errorGlobal, traducir } from "./erroresClerk";
 
 // Usuario + contraseña (Clerk). Si Clerk pidiera verificar el dispositivo, pide el código.
-export default function IniciarSesion({ irA }) {
+export default function IniciarSesion() {
   const { signIn, errors, fetchStatus } = useSignIn();
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
@@ -70,10 +70,7 @@ export default function IniciarSesion({ irA }) {
         {cargando && <Loader2 className="animate-spin" />} Iniciar sesión
       </Button>
       <p className="text-muted-foreground text-center text-sm">
-        ¿Primera vez?{" "}
-        <button type="button" onClick={() => irA("registro")} className="text-foreground font-medium underline-offset-4 hover:underline">
-          Creá tu cuenta
-        </button>
+        ¿No tenés usuario? Pedíselo al administrador de tu empresa.
       </p>
     </form>
   );
