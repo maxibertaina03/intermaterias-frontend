@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import AppLayout from "@/components/layout/AppLayout";
 import NoEncontrada from "@/pages/NoEncontrada";
 import { SoloEmpresa, SoloSuperAdmin } from "@/features/auth/RutasPorPerfil";
+import UsuariosPage from "@/features/usuarios/UsuariosPage";
 // Seguimiento (Tomi)
 import PendientesPage from "@/features/tareas/PendientesPage";
 import TareasPage from "@/features/tareas/TareasPage";
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/clientes" element={<ClientesPage />} />
           <Route path="/clientes/:id" element={<ClienteDetallePage />} />
           <Route path="/propuestas" element={<PropuestasPage />} />
+          <Route path="/usuarios" element={<UsuariosPage />} />
 
           <Route path="/servicios" element={<ServiciosPage />} />
           <Route path="/proveedores" element={<ProveedoresPage />} />

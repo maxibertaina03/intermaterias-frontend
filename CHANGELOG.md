@@ -8,6 +8,7 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 ## [Sin publicar]
 
 ### Agregado
+- Página **Usuarios** para listar, crear y editar cuentas, roles y estado de acceso del equipo de la empresa (#32).
 - Menú según quién entra: el super admin solo ve *Empresas*; los usuarios de una empresa ven sus datos, y *Usuarios* solo el administrador de la empresa.
 - Nombre de la empresa en la barra superior; usuario y empresa en el menú de usuario.
 
