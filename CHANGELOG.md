@@ -24,6 +24,10 @@ Primera versión completa: todas las pantallas del recorrido de un evento, con l
 - Versión del sistema visible al pie del menú.
 - `Dockerfile` multi-stage (build con Node, servido con Nginx).
 
+### Corregido
+- En un evento realizado o cancelado ya no aparecen "Editar" ni "Cancelar evento" (tampoco "Cancelar" con la propuesta no aceptada) (#37).
+- El formulario de solicitudes ya no muestra los contactos de otro cliente mientras carga los del elegido.
+
 ## [0.1.0] - 2026-10-15
 
 ### Agregado
