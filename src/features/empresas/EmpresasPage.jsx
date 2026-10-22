@@ -152,7 +152,7 @@ export default function EmpresasPage() {
           </CardContent>
         </Card>
       )}
-      <CrearAdministradorDialog empresa={empresaParaAdmin} onCerrar={() => setEmpresaParaAdmin(null)} />
+      <CrearAdministradorDialog key={empresaParaAdmin?.id_empresa ?? "cerrado"} empresa={empresaParaAdmin} onCerrar={() => setEmpresaParaAdmin(null)} />
     </>
   );
 }
