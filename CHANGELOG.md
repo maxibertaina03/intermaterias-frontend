@@ -20,7 +20,11 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 ### Eliminado
 - El registro público ("Creá tu cuenta"): los usuarios los crea el administrador de cada empresa.
 
-## [1.0.0] - en preparación
+## [1.0.1] - 2026-10-22
+
+Sin cambios en el front: acompaña el arreglo de la API (en Docker las fechas se veían un día antes; ahora se ven bien).
+
+## [1.0.0] - 2026-10-22
 
 Primera versión completa: todas las pantallas del recorrido de un evento, con login.
 
@@ -47,6 +51,7 @@ Primera versión completa: todas las pantallas del recorrido de un evento, con l
 - CRUD de empresas con navbar, página 404 y estilos generales.
 - `Dockerfile` para correr el front en la infraestructura.
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v1.0.0...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v1.0.1...develop
+[1.0.1]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/maxibertaina03/intermaterias-frontend/releases/tag/v0.1.0
