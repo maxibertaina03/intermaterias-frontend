@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { Pencil, Plus } from "lucide-react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -10,14 +9,9 @@ import { Cargando, MensajeError, Vacio } from "@/components/common/Estados";
 import { useUsuario } from "@/features/auth/UsuarioContext";
 import SoloRol from "@/features/auth/SoloRol";
 import { mensajeDeError } from "@/lib/api";
+import { etiquetaRol } from "@/lib/formato";
 import UsuarioDialog from "./UsuarioDialog";
 import { obtenerUsuarios } from "./usuariosService";
-
-const ETIQUETAS_ROL = {
-  admin_empresa: "Administrador", atencion_cliente: "Atención al cliente",
-  responsable_propuesta: "Responsable de propuesta", responsable_organizacion: "Responsable de organización",
-  integrante: "Integrante",
-};
 
 export default function UsuariosPage() {
   const { usuario, tieneRol } = useUsuario();
@@ -64,7 +58,7 @@ export default function UsuariosPage() {
                 <TableRow key={item.id_usuario}>
                   <TableCell className="font-medium">{item.nombre}</TableCell>
                   <TableCell>{item.usuario}</TableCell>
-                  <TableCell>{item.roles.map((rol) => ETIQUETAS_ROL[rol] ?? rol).join(", ")}</TableCell>
+                  <TableCell>{item.roles.map(etiquetaRol).join(", ")}</TableCell>
                   <TableCell><EstadoBadge estado={item.activo ? "activa" : "inactiva"} /></TableCell>
                   <TableCell className="text-right">
                     <Button variant="ghost" size="sm" onClick={() => setDialogo({ usuario: item })}><Pencil /> Editar</Button>
