@@ -7,6 +7,10 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.0.1] - 2026-10-22
+
+Sin cambios en el front: acompaña los arreglos de la API y la documentación de la v2.0.1.
+
 ## [2.0.0] - 2026-10-22
 
 Cada empresa entra con sus propios usuarios y ve solo lo suyo, y los eventos tienen invitados con confirmación y pago.
@@ -57,7 +61,8 @@ Primera versión completa: todas las pantallas del recorrido de un evento, con l
 - CRUD de empresas con navbar, página 404 y estilos generales.
 - `Dockerfile` para correr el front en la infraestructura.
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.0...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.1...develop
+[2.0.1]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v1.0.1...v2.0.0
 [1.0.1]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v0.1.0...v1.0.0
