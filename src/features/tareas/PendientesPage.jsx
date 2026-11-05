@@ -9,11 +9,20 @@ import { formatearFecha, formatearPesos } from "@/lib/formato";
 import { mensajeDeError } from "@/lib/api";
 import { obtenerPendientes } from "./tareasService";
 
-const TarjetaPendientes = ({ titulo, icono: Icono, cantidad, children }) => (
-  <Card>
+// Cada tarjeta lleva su color: franja arriba e ícono
+const COLORES = {
+  turquesa: { borde: "border-t-turquesa", icono: "bg-teal-50 text-teal-600" },
+  coral: { borde: "border-t-coral", icono: "bg-orange-50 text-coral" },
+  indigo: { borde: "border-t-indigo", icono: "bg-indigo-50 text-indigo" },
+};
+
+const TarjetaPendientes = ({ titulo, icono: Icono, cantidad, color, children }) => (
+  <Card className={`border-t-4 ${COLORES[color].borde}`}>
     <CardHeader className="flex flex-row items-center justify-between space-y-0">
       <CardTitle className="text-base">{titulo} <span className="text-muted-foreground">({cantidad})</span></CardTitle>
-      <Icono className="size-5 text-muted-foreground" aria-hidden="true" />
+      <span className={`flex size-8 items-center justify-center rounded-lg ${COLORES[color].icono}`}>
+        <Icono className="size-4" aria-hidden="true" />
+      </span>
     </CardHeader>
     <CardContent>{children}</CardContent>
   </Card>
@@ -47,7 +56,7 @@ export default function PendientesPage() {
         <Vacio titulo="No hay pendientes por ahora">Los servicios, tareas y propuestas que requieran seguimiento aparecerán acá.</Vacio>
       ) : (
         <div className="grid gap-4 xl:grid-cols-3">
-          <TarjetaPendientes titulo="Servicios por confirmar" icono={PackageCheck} cantidad={pendientes.servicios.length}>
+          <TarjetaPendientes titulo="Servicios por confirmar" icono={PackageCheck} color="turquesa" cantidad={pendientes.servicios.length}>
             {pendientes.servicios.length === 0 ? <p className="text-sm text-muted-foreground">Sin servicios pendientes.</p> :
               <ul className="space-y-3">{pendientes.servicios.map((item) => (
                 <li key={item.id_evento_servicio} className="space-y-1 border-b pb-3 last:border-0 last:pb-0">
@@ -59,7 +68,7 @@ export default function PendientesPage() {
               ))}</ul>}
           </TarjetaPendientes>
 
-          <TarjetaPendientes titulo="Tareas próximas o vencidas" icono={ClipboardCheck} cantidad={pendientes.tareas.length}>
+          <TarjetaPendientes titulo="Tareas próximas o vencidas" icono={ClipboardCheck} color="coral" cantidad={pendientes.tareas.length}>
             {pendientes.tareas.length === 0 ? <p className="text-sm text-muted-foreground">Sin tareas para esta semana.</p> :
               <ul className="space-y-3">{pendientes.tareas.map((item) => {
                 const atrasada = fechaYaPaso(item.fecha_prevista);
@@ -74,7 +83,7 @@ export default function PendientesPage() {
               })}</ul>}
           </TarjetaPendientes>
 
-          <TarjetaPendientes titulo="Propuestas por vencer" icono={CalendarClock} cantidad={pendientes.propuestas.length}>
+          <TarjetaPendientes titulo="Propuestas por vencer" icono={CalendarClock} color="indigo" cantidad={pendientes.propuestas.length}>
             {pendientes.propuestas.length === 0 ? <p className="text-sm text-muted-foreground">Sin propuestas próximas a vencer.</p> :
               <ul className="space-y-3">{pendientes.propuestas.map((item) => (
                 <li key={item.id_propuesta} className="space-y-1 border-b pb-3 last:border-0 last:pb-0">

@@ -7,6 +7,12 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Cambiado
+- **El sistema tiene color**: índigo como color principal (barra superior, botones y enlaces), coral para las acciones destacadas (*Nueva solicitud*, *Presentar*) y fondo y texto en tonos pizarra.
+- Los estados se ven con un color por tipo: pendiente en ámbar, confirmado en turquesa, en preparación en violeta, realizado o aceptado en verde, cancelado o rechazado en rojo.
+- *Pendientes*: cada tarjeta con su franja e ícono de color.
+- Login e invitación pública con fondo índigo.
+
 ## [2.0.1] - 2026-10-22
 
 Sin cambios en el front: acompaña los arreglos de la API y la documentación de la v2.0.1.

@@ -47,7 +47,7 @@ export default function EventosPage() {
     <>
       <PageHeader titulo="Solicitudes y eventos" descripcion="Desde que se reciben hasta que se realizan o cancelan.">
         <SoloRol roles={["atencion_cliente"]}>
-          <Button asChild><Link to="/eventos/nuevo"><Plus /> Nueva solicitud</Link></Button>
+          <Button variant="acento" asChild><Link to="/eventos/nuevo"><Plus /> Nueva solicitud</Link></Button>
         </SoloRol>
       </PageHeader>
 
