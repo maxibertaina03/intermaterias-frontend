@@ -7,6 +7,10 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.1.0] - 2026-11-05
+
+El sistema tiene color: paleta índigo, coral y turquesa.
+
 ### Cambiado
 - **El sistema tiene color**: índigo como color principal (barra superior, botones y enlaces), coral para las acciones destacadas (*Nueva solicitud*, *Presentar*) y fondo y texto en tonos pizarra.
 - Los estados se ven con un color por tipo: pendiente en ámbar, confirmado en turquesa, en preparación en violeta, realizado o aceptado en verde, cancelado o rechazado en rojo.
@@ -67,7 +71,8 @@ Primera versión completa: todas las pantallas del recorrido de un evento, con l
 - CRUD de empresas con navbar, página 404 y estilos generales.
 - `Dockerfile` para correr el front en la infraestructura.
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.1...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.1.0...develop
+[2.1.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v1.0.1...v2.0.0
 [1.0.1]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v1.0.0...v1.0.1
