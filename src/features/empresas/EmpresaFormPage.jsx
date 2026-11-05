@@ -13,12 +13,12 @@ import { actualizarEmpresa, crearEmpresa, obtenerEmpresa } from "./empresasServi
 
 const CAMPOS = [
   { name: "nombre", label: "Nombre", requerido: true },
-  { name: "cuit", label: "CUIT", requerido: true },
+  { name: "cuit", label: "CUIT", requerido: true },   // obligatorio al crear; las de prueba gratuita pueden no tenerlo
   { name: "email", label: "Email", type: "email" },
   { name: "telefono", label: "Teléfono", type: "tel" },
   { name: "direccion", label: "Dirección" },
 ];
-const VACIO = { nombre: "", cuit: "", email: "", telefono: "", direccion: "" };
+const VACIO = { nombre: "", cuit: "", email: "", telefono: "", direccion: "", fecha_fin_prueba: "" };
 
 export default function EmpresaFormPage() {
   const { id } = useParams();                 // si hay id: editar; si no: crear
@@ -35,6 +35,7 @@ export default function EmpresaFormPage() {
       .then(({ data }) => setForm({
         nombre: data.nombre ?? "", cuit: data.cuit ?? "", email: data.email ?? "",
         telefono: data.telefono ?? "", direccion: data.direccion ?? "",
+        fecha_fin_prueba: data.fecha_fin_prueba ? data.fecha_fin_prueba.slice(0, 10) : "",
       }))
       .catch((e) => setErrorCarga(e.response?.status === 404 ? "Empresa no encontrada" : mensajeDeError(e, "No se pudo cargar la empresa")))
       .finally(() => setCargando(false));
@@ -50,12 +51,17 @@ export default function EmpresaFormPage() {
     e.preventDefault();
     const nuevos = {};
     if (!form.nombre.trim()) nuevos.nombre = "El nombre es obligatorio";
-    if (!form.cuit.trim()) nuevos.cuit = "El CUIT es obligatorio";
+    if (!id && !form.cuit.trim()) nuevos.cuit = "El CUIT es obligatorio";
     setErrores(nuevos);
     if (Object.keys(nuevos).length) return;
 
     // Los opcionales vacíos se mandan como null
-    const datos = { ...form, email: form.email || null, telefono: form.telefono || null, direccion: form.direccion || null };
+    const { fecha_fin_prueba, ...resto } = form;
+    const datos = {
+      ...resto, cuit: form.cuit.trim() || null, email: form.email || null, telefono: form.telefono || null, direccion: form.direccion || null,
+      // Al editar: fin de la prueba gratuita (vacío = sin límite)
+      ...(id ? { fecha_fin_prueba: fecha_fin_prueba || null } : {}),
+    };
     setGuardando(true);
     try {
       if (id) await actualizarEmpresa(id, datos);
@@ -84,11 +90,17 @@ export default function EmpresaFormPage() {
         <CardContent>
           <form onSubmit={handleSubmit} noValidate className="grid gap-4">
             {CAMPOS.map(({ name, label, type = "text", requerido }) => (
-              <Campo key={name} id={name} label={label} requerido={requerido} error={errores[name]}>
+              <Campo key={name} id={name} label={label} requerido={requerido && !(id && name === "cuit")} error={errores[name]}>
                 <Input id={name} name={name} type={type} value={form[name]} onChange={handleChange}
                   aria-invalid={Boolean(errores[name])} />
               </Campo>
             ))}
+            {id && (
+              <Campo id="fecha_fin_prueba" label="Fin de la prueba gratuita">
+                <Input id="fecha_fin_prueba" name="fecha_fin_prueba" type="date" value={form.fecha_fin_prueba} onChange={handleChange} />
+                <p className="text-muted-foreground mt-1 text-xs">Vacío = sin límite (empresa con suscripción o dada de alta por vos).</p>
+              </Campo>
+            )}
             <div className="flex justify-end gap-2 pt-2">
               <Button type="button" variant="outline" onClick={() => navigate("/empresas")}>Cancelar</Button>
               <Button type="submit" disabled={guardando}>
