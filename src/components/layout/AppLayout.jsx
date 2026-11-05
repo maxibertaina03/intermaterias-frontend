@@ -46,9 +46,10 @@ export default function AppLayout() {
     <div className="bg-muted/30 flex min-h-screen">
       {/* Fijo: al bajar en una página larga, el menú queda en su lugar */}
       <aside className="bg-background sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r md:flex">
-        <div className="border-b px-5 py-4">
-          <p className="font-semibold">Eventos estudiantiles</p>
-          <p className="text-muted-foreground text-xs">Sistema de gestión</p>
+        {/* Marca sobre la barra índigo: continúa la barra superior */}
+        <div className="bg-primary text-primary-foreground flex h-14 shrink-0 flex-col justify-center px-5">
+          <p className="leading-tight font-semibold">Eventos estudiantiles</p>
+          <p className="text-xs text-indigo-200">Sistema de gestión</p>
         </div>
         <nav className="flex-1 space-y-5 overflow-y-auto p-3">
           {secciones.map((seccion) => (
@@ -69,7 +70,7 @@ export default function AppLayout() {
         <p className="text-muted-foreground border-t px-5 py-3 text-xs">Versión {import.meta.env.VITE_APP_VERSION}</p>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="bg-background flex h-14 items-center justify-between gap-4 border-b px-6">
+        <header className="bg-primary text-primary-foreground flex h-14 items-center justify-between gap-4 px-6 shadow-sm">
           <p className="truncate text-sm font-medium">
             {esSuperAdmin ? "Administración del sistema" : usuario?.empresa}
           </p>

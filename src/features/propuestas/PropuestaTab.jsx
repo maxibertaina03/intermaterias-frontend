@@ -281,7 +281,7 @@ export default function PropuestaTab({ evento }) {
       </Card>
 
       <div className="flex flex-wrap items-end gap-3">
-        {editable && <Button onClick={() => handleTransicion(
+        {editable && <Button variant="acento" onClick={() => handleTransicion(
           () => presentarPropuesta(propuesta.id_propuesta), "Se presentó la propuesta"
         )} disabled={guardando || !propuesta.items.length}>Presentar</Button>}
         {propuesta.estado === "presentada" && <>
