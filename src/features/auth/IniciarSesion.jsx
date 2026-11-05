@@ -70,7 +70,9 @@ export default function IniciarSesion() {
         {cargando && <Loader2 className="animate-spin" />} Iniciar sesión
       </Button>
       <p className="text-muted-foreground text-center text-sm">
-        ¿No tenés usuario? Pedíselo al administrador de tu empresa.
+        ¿No tenés usuario? Pedíselo al administrador de tu empresa.<br />
+        ¿Tu empresa todavía no usa el sistema?{" "}
+        <a href="/registro" className="text-foreground font-medium underline-offset-4 hover:underline">Probá gratis 30 días</a>
       </p>
     </form>
   );

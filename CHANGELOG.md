@@ -7,6 +7,19 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.2.0] - 2026-11-05
+
+Menú lateral agrupado y prueba gratuita de 30 días (registro, aviso y fecha editable por el super admin).
+
+### Agregado
+- **Prueba gratuita de 30 días**: pantalla `/registro` donde una organizadora crea su empresa y su usuario, y entra directo al sistema. Enlace desde el login.
+- Aviso de la prueba en la parte superior: días que quedan o, si venció, que la empresa está en solo lectura.
+- Super admin: columna *Prueba gratuita* en Empresas y fecha de fin editable (vacía = sin límite).
+
+### Cambiado
+- **Menú lateral agrupado**: cada sección (Seguimiento, Encargos, Catálogos, Administración) se abre y se cierra al tocar su título, con animación; recuerda lo que dejaste cerrado.
+- El CUIT de una empresa es obligatorio solo al crearla (las registradas en la prueba no lo tienen).
+
 ## [2.1.0] - 2026-11-05
 
 El sistema tiene color: paleta índigo, coral y turquesa.
@@ -71,7 +84,8 @@ Primera versión completa: todas las pantallas del recorrido de un evento, con l
 - CRUD de empresas con navbar, página 404 y estilos generales.
 - `Dockerfile` para correr el front en la infraestructura.
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.1.0...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.2.0...develop
+[2.2.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v1.0.1...v2.0.0

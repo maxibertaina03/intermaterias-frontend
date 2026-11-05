@@ -14,8 +14,19 @@ import EstadoBadge from "@/components/common/EstadoBadge";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import { Cargando, MensajeError, Vacio } from "@/components/common/Estados";
 import { mensajeDeError } from "@/lib/api";
+import { formatearFecha } from "@/lib/formato";
 import { useUsuario } from "@/features/auth/UsuarioContext";
 import { eliminarEmpresa, crearAdministrador, obtenerEmpresas } from "./empresasService";
+
+// Prueba gratuita de la empresa: sin límite, en curso o vencida
+const hoy = () => new Date().toISOString().slice(0, 10);
+function PruebaGratuita({ fin }) {
+  if (!fin) return <span className="text-muted-foreground text-sm">Sin límite</span>;
+  const dia = fin.slice(0, 10);
+  return dia < hoy()
+    ? <span className="text-sm font-medium text-red-700">Venció el {formatearFecha(dia)}</span>
+    : <span className="text-sm text-amber-800">Hasta el {formatearFecha(dia)}</span>;
+}
 
 const FORM_ADMIN_VACIO = { nombre: "", apellido: "", usuario: "", password: "" };
 
@@ -120,6 +131,7 @@ export default function EmpresasPage() {
                   <TableHead>Empresa</TableHead>
                   <TableHead>CUIT</TableHead>
                   <TableHead>Teléfono</TableHead>
+                  <TableHead>Prueba gratuita</TableHead>
                   <TableHead>Estado</TableHead>
                   <TableHead className="text-right">Acciones</TableHead>
                 </TableRow>
@@ -128,8 +140,9 @@ export default function EmpresasPage() {
                 {empresas.map((empresa) => (
                   <TableRow key={empresa.id_empresa}>
                     <TableCell className="font-medium">{empresa.nombre}</TableCell>
-                    <TableCell>{empresa.cuit}</TableCell>
+                    <TableCell>{empresa.cuit || "Sin dato"}</TableCell>
                     <TableCell>{empresa.telefono || "Sin dato"}</TableCell>
+                    <TableCell><PruebaGratuita fin={empresa.fecha_fin_prueba} /></TableCell>
                     <TableCell><EstadoBadge estado={empresa.activo ? "activa" : "inactiva"} /></TableCell>
                     <TableCell className="space-x-1 text-right">
                       {esSuperAdmin && <Button variant="outline" size="sm" onClick={() => setEmpresaParaAdmin(empresa)}>Crear administrador</Button>}
