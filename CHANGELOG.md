@@ -7,6 +7,15 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Agregado
+- **Prueba gratuita de 30 días**: pantalla `/registro` donde una organizadora crea su empresa y su usuario, y entra directo al sistema. Enlace desde el login.
+- Aviso de la prueba en la parte superior: días que quedan o, si venció, que la empresa está en solo lectura.
+- Super admin: columna *Prueba gratuita* en Empresas y fecha de fin editable (vacía = sin límite).
+
+### Cambiado
+- **Menú lateral agrupado**: cada sección (Seguimiento, Encargos, Catálogos, Administración) se abre y se cierra al tocar su título, con animación; recuerda lo que dejaste cerrado.
+- El CUIT de una empresa es obligatorio solo al crearla (las registradas en la prueba no lo tienen).
+
 ## [2.1.0] - 2026-11-05
 
 El sistema tiene color: paleta índigo, coral y turquesa.

@@ -6,15 +6,19 @@ import { esES } from "@clerk/localizations";
 import { Toaster } from "@/components/ui/sonner";
 import AuthGate from "@/features/auth/AuthGate";
 import InvitacionPage from "@/features/invitados/InvitacionPage";
+import RegistroPage from "@/features/auth/RegistroPage";
 import { CLERK_KEY, usaClerk } from "@/features/auth/clerk";
 import "./index.css";
 import App from "./App.jsx";
 
 function Entrada() {
   const invitacionPublica = useMatch({ path: "/invitacion/:token", end: true });
+  const registro = useMatch({ path: "/registro", end: true });
   if (invitacionPublica) {
     return <Routes><Route path="/invitacion/:token" element={<InvitacionPage />} /></Routes>;
   }
+  // Prueba gratuita: se registra sin estar logueado
+  if (registro) return <RegistroPage />;
   return <AuthGate><App /></AuthGate>;
 }
 
