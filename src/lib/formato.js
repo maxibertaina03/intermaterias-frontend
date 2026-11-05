@@ -32,6 +32,11 @@ const ETIQUETAS = {
   en_curso: "En curso",
   hecha: "Hecha",
   activa: "Activa",
+  activo: "Activo",
+  inactivo: "Inactivo",
+  va: "Va",
+  no_va: "No va",
+  verificado: "Verificado",
   inactiva: "Inactiva"
 };
 export const etiquetaEstado = (estado) => ETIQUETAS[estado] || estado;

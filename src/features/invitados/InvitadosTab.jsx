@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Cargando, MensajeError, Vacio } from "@/components/common/Estados";
 import EstadoBadge from "@/components/common/EstadoBadge";
@@ -136,10 +135,10 @@ export default function InvitadosTab({ evento }) {
         <TableHeader><TableRow><TableHead>Invitado</TableHead><TableHead>Asistencia</TableHead><TableHead>Medio de pago</TableHead><TableHead>Comprobante</TableHead><TableHead>Pago</TableHead><TableHead>Respondió</TableHead><TableHead className="text-right">Acciones</TableHead></TableRow></TableHeader>
         <TableBody>{datos.invitados.map((invitado) => <TableRow key={invitado.id_invitado}>
           <TableCell className="font-medium">{invitado.nombre} {invitado.apellido}</TableCell>
-          <TableCell><Badge variant={invitado.asiste ? "default" : "secondary"}>{invitado.asiste ? "Va" : "No va"}</Badge></TableCell>
+          <TableCell><EstadoBadge estado={invitado.asiste ? "va" : "no_va"} /></TableCell>
           <TableCell>{invitado.medio_pago === "efectivo" ? "Efectivo" : invitado.medio_pago === "transferencia" ? "Transferencia" : "—"}</TableCell>
           <TableCell>{invitado.tiene_comprobante ? <Button variant="link" size="sm" onClick={() => abrirComprobante(invitado)} disabled={accionInvitado === invitado.id_invitado}><FileText /> Ver <ExternalLink /></Button> : "—"}</TableCell>
-          <TableCell>{invitado.asiste ? <Badge variant={invitado.pago_verificado ? "default" : "secondary"}>{invitado.pago_verificado ? "Verificado" : "Pendiente"}</Badge> : "—"}</TableCell>
+          <TableCell>{invitado.asiste ? <EstadoBadge estado={invitado.pago_verificado ? "verificado" : "pendiente"} /> : "—"}</TableCell>
           <TableCell>{formatearFecha(invitado.fecha_respuesta)}</TableCell>
           <TableCell className="text-right"><SoloRol roles={ROLES_GESTION}>{invitado.asiste && !invitado.pago_verificado && <Button size="sm" variant="outline" onClick={() => marcarVerificado(invitado)} disabled={Boolean(accionInvitado)}><Check /> Marcar verificado</Button>}</SoloRol></TableCell>
         </TableRow>)}</TableBody>

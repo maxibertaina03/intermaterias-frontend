@@ -11,9 +11,9 @@ const PUNTOS = [
 export default function AuthLayout({ titulo, descripcion, children }) {
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
-      <aside className="relative hidden overflow-hidden bg-zinc-950 p-12 text-zinc-50 lg:flex lg:flex-col lg:justify-between">
-        <div className="pointer-events-none absolute -top-40 -left-40 size-[34rem] rounded-full bg-violet-600/25 blur-3xl" />
-        <div className="pointer-events-none absolute -right-32 -bottom-48 size-[30rem] rounded-full bg-sky-500/20 blur-3xl" />
+      <aside className="relative hidden overflow-hidden bg-indigo-950 p-12 text-zinc-50 lg:flex lg:flex-col lg:justify-between">
+        <div className="pointer-events-none absolute -top-40 -left-40 size-[34rem] rounded-full bg-indigo-500/35 blur-3xl" />
+        <div className="pointer-events-none absolute -right-32 -bottom-48 size-[30rem] rounded-full bg-teal-400/20 blur-3xl" />
 
         <div className="relative flex items-center gap-2 text-lg font-semibold">
           <span className="flex size-9 items-center justify-center rounded-lg bg-white/10 ring-1 ring-white/15">
@@ -28,14 +28,14 @@ export default function AuthLayout({ titulo, descripcion, children }) {
           </h2>
           <ul className="space-y-4">
             {PUNTOS.map(({ icono: Icono, texto }) => (
-              <li key={texto} className="flex items-center gap-3 text-zinc-300">
-                <Icono className="size-5 shrink-0 text-zinc-400" /> {texto}
+              <li key={texto} className="flex items-center gap-3 text-indigo-100">
+                <Icono className="size-5 shrink-0 text-coral" /> {texto}
               </li>
             ))}
           </ul>
         </div>
 
-        <p className="relative text-sm text-zinc-500">Sistema de gestión para el personal de la organizadora</p>
+        <p className="relative text-sm text-indigo-300">Sistema de gestión para el personal de la organizadora</p>
       </aside>
 
       <main className="bg-background flex items-center justify-center p-6 sm:p-12">

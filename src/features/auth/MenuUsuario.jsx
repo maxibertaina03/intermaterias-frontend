@@ -25,15 +25,15 @@ export default function MenuUsuario() {
   if (!usuario) return null;
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="hover:bg-accent flex items-center gap-3 rounded-md px-2 py-1.5 text-left outline-none">
-        <span className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-full text-xs font-semibold">
+      <DropdownMenuTrigger className="flex items-center gap-3 rounded-md px-2 py-1.5 text-left outline-none hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/40">
+        <span className="bg-coral flex size-8 items-center justify-center rounded-full text-xs font-semibold text-white">
           {iniciales(usuario.nombre)}
         </span>
         <span className="hidden leading-tight sm:block">
           <span className="block text-sm font-medium">{usuario.nombre}</span>
-          <span className="text-muted-foreground block text-xs">{usuario.empresa ?? "Super admin"}</span>
+          <span className="block text-xs text-indigo-200">{usuario.empresa ?? "Super admin"}</span>
         </span>
-        <ChevronDown className="text-muted-foreground size-4" />
+        <ChevronDown className="size-4 text-indigo-200" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-64">
         <DropdownMenuLabel className="font-normal">
