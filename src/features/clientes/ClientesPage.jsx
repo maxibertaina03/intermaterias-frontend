@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Pencil, Plus, Search, Trash2 } from "lucide-react";
+import { Pencil, Plus, Search, Trash2, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -89,7 +89,11 @@ export default function ClientesPage() {
                           <p>{c.contacto_nombre}</p>
                           {c.contacto_telefono && <p className="text-muted-foreground text-xs">{c.contacto_telefono}</p>}
                         </>
-                      ) : <span className="text-muted-foreground">Sin contacto</span>}
+                      ) : (
+                        <Link to={`/clientes/${c.id_cliente}`} className="text-primary inline-flex items-center gap-1 text-sm underline-offset-4 hover:underline">
+                          <UserPlus className="size-3.5" /> Agregar contacto
+                        </Link>
+                      )}
                     </TableCell>
                     <TableCell className="text-center">{c.cantidad_eventos}</TableCell>
                     <TableCell><EstadoBadge estado={c.activo ? "activa" : "inactiva"} /></TableCell>

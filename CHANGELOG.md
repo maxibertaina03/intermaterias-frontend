@@ -7,6 +7,14 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Agregado
+- **Recorrido guiado** la primera vez que alguien entra (con `driver.js`): resalta Seguimiento, Encargos, Catálogos, Usuarios, el aviso de la prueba y el menú. Muestra solo lo que cada rol ve; se puede volver a ver desde el menú de usuario (*Ver el recorrido*).
+- **Primeros pasos** en Pendientes, para el administrador: 7 pasos para cargar el primer evento de punta a punta, que se tildan solos según lo que ya cargó la empresa, con barra de progreso y botón a cada pantalla.
+- **Nuevo cliente** con su persona de contacto (opcional) en el mismo formulario.
+
+### Cambiado
+- En Clientes, "Sin contacto" pasa a ser el enlace *Agregar contacto* a la ficha del cliente.
+
 ## [2.2.1] - 2026-11-06
 
 Imagen de producción publicada en GitHub Container Registry para desplegar en el VPS.

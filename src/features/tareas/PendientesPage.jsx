@@ -8,6 +8,7 @@ import PageHeader from "@/components/common/PageHeader";
 import { formatearFecha, formatearPesos } from "@/lib/formato";
 import { mensajeDeError } from "@/lib/api";
 import { obtenerPendientes } from "./tareasService";
+import PrimerosPasos from "@/features/recorrido/PrimerosPasos";
 
 // Cada tarjeta lleva su color: franja arriba e ícono
 const COLORES = {
@@ -52,6 +53,7 @@ export default function PendientesPage() {
   return (
     <>
       <PageHeader titulo="Pendientes" descripcion="Lo que necesita seguimiento en los próximos días." />
+      <PrimerosPasos />
       {cargando ? <Cargando filas={5} /> : error ? <MensajeError>{error}</MensajeError> : cantidad === 0 ? (
         <Vacio titulo="No hay pendientes por ahora">Los servicios, tareas y propuestas que requieran seguimiento aparecerán acá.</Vacio>
       ) : (
