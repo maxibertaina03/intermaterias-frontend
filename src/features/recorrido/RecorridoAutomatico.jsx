@@ -7,7 +7,7 @@ export default function RecorridoAutomatico() {
   const datos = useUsuario();
   const actuales = useRef(datos);
   const yaAbierto = useRef(false);
-  actuales.current = datos;
+  useEffect(() => { actuales.current = datos; });   // siempre los datos del último render
 
   // Depende solo del usuario: un re-render (por ejemplo, la redirección del super admin a Empresas)
   // no cancela la espera. Se abre una sola vez por sesión.
