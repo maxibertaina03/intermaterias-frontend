@@ -7,6 +7,12 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+### Agregado
+- Workflow `publicar-imagen.yml`: con cada tag `vX.Y.Z` GitHub Actions arma la imagen y la publica en `ghcr.io/maxibertaina03/intermaterias-frontend`. La clave pública de Clerk sale de la variable del repo `CLERK_PUBLISHABLE_KEY`.
+
+### Cambiado
+- nginx del front: cache de un año para `/assets/` (tienen hash en el nombre), `index.html` sin cache y gzip.
+
 ## [2.2.0] - 2026-11-05
 
 Menú lateral agrupado y prueba gratuita de 30 días (registro, aviso y fecha editable por el super admin).
