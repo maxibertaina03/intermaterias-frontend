@@ -143,3 +143,25 @@
     @apply font-sans;
     }
 }
+/* Recorrido guiado (driver.js): globos con la paleta del sistema */
+.driver-popover.recorrido {
+  max-width: 340px;
+  border-radius: 12px;
+  padding: 18px 18px 14px;
+  color: #1E293B;
+  font-family: inherit;
+  box-shadow: 0 20px 50px rgba(30, 27, 75, 0.25);
+}
+.driver-popover.recorrido .driver-popover-title { font-size: 16px; font-weight: 700; color: #1E293B; }
+.driver-popover.recorrido .driver-popover-description { font-size: 14px; line-height: 1.5; color: #475569; margin-top: 6px; }
+.driver-popover.recorrido .driver-popover-progress-text { font-size: 12px; color: #94A3B8; }
+.driver-popover.recorrido .driver-popover-footer { margin-top: 14px; }
+.driver-popover.recorrido .driver-popover-footer button {
+  font-family: inherit; font-size: 13px; text-shadow: none; border-radius: 8px; padding: 6px 12px;
+  border: 1px solid #E2E8F0; background: #fff; color: #1E293B;
+}
+.driver-popover.recorrido .driver-popover-footer .driver-popover-next-btn {
+  background: var(--indigo); border-color: var(--indigo); color: #fff;
+}
+.driver-popover.recorrido .driver-popover-footer .driver-popover-next-btn:hover { background: #4338CA; }
+.driver-popover.recorrido .driver-popover-close-btn { color: #94A3B8; }

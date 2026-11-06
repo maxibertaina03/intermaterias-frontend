@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import MenuUsuario from "@/features/auth/MenuUsuario";
 import { useUsuario } from "@/features/auth/UsuarioContext";
 import { formatearFecha } from "@/lib/formato";
+import RecorridoAutomatico from "@/features/recorrido/RecorridoAutomatico";
 
 // Secciones del menú que el usuario dejó cerradas (se recuerdan en este navegador)
 const CLAVE_CERRADAS = "menu-secciones-cerradas";
@@ -20,7 +21,7 @@ const guardarCerradas = (lista) => {
 // Un grupo del menú: el título abre y cierra sus opciones, con una transición suave
 function SeccionMenu({ seccion, abierta, onToggle }) {
   return (
-    <div>
+    <div data-tour={seccion.titulo}>
       <button type="button" onClick={onToggle} aria-expanded={abierta}
         className="text-muted-foreground hover:text-foreground hover:bg-accent/60 flex w-full items-center justify-between rounded-md px-2 py-1 text-xs font-medium uppercase transition-colors">
         {seccion.titulo}
@@ -50,7 +51,7 @@ function AvisoPrueba({ usuario }) {
   if (!usuario?.fecha_fin_prueba) return null;
   if (usuario.prueba_vencida) {
     return (
-      <div className="flex items-center gap-2 border-b border-red-200 bg-red-50 px-6 py-2 text-sm text-red-800">
+      <div data-tour="aviso-prueba" className="flex items-center gap-2 border-b border-red-200 bg-red-50 px-6 py-2 text-sm text-red-800">
         <Lock className="size-4 shrink-0" />
         Tu prueba gratuita terminó el {formatearFecha(usuario.fecha_fin_prueba)}: podés ver tus datos, pero no cargar ni modificar. Próximamente vas a poder suscribirte.
       </div>
@@ -58,7 +59,7 @@ function AvisoPrueba({ usuario }) {
   }
   const dias = Number(usuario.dias_prueba);
   return (
-    <div className="flex items-center gap-2 border-b border-orange-200 bg-orange-50 px-6 py-2 text-sm text-orange-900">
+    <div data-tour="aviso-prueba" className="flex items-center gap-2 border-b border-orange-200 bg-orange-50 px-6 py-2 text-sm text-orange-900">
       <Gift className="text-coral size-4 shrink-0" />
       Prueba gratuita: {dias === 0 ? "hoy es el último día" : `te ${dias === 1 ? "queda 1 día" : `quedan ${dias} días`}`} (hasta el {formatearFecha(usuario.fecha_fin_prueba)}). Próximamente vas a poder suscribirte.
     </div>
@@ -135,6 +136,7 @@ export default function AppLayout() {
         <main className="mx-auto w-full max-w-6xl flex-1 p-6">
           <Outlet />
         </main>
+        <RecorridoAutomatico />
       </div>
     </div>
   );
