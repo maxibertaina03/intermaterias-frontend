@@ -7,6 +7,16 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.2.1] - 2026-11-06
+
+Imagen de producción publicada en GitHub Container Registry para desplegar en el VPS.
+
+### Agregado
+- Workflow `publicar-imagen.yml`: con cada tag `vX.Y.Z` GitHub Actions arma la imagen y la publica en `ghcr.io/maxibertaina03/intermaterias-frontend`. La clave pública de Clerk sale de la variable del repo `CLERK_PUBLISHABLE_KEY`.
+
+### Cambiado
+- nginx del front: cache de un año para `/assets/` (tienen hash en el nombre), `index.html` sin cache y gzip.
+
 ## [2.2.0] - 2026-11-05
 
 Menú lateral agrupado y prueba gratuita de 30 días (registro, aviso y fecha editable por el super admin).
@@ -84,7 +94,8 @@ Primera versión completa: todas las pantallas del recorrido de un evento, con l
 - CRUD de empresas con navbar, página 404 y estilos generales.
 - `Dockerfile` para correr el front en la infraestructura.
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.2.0...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.2.1...develop
+[2.2.1]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.0...v2.0.1
