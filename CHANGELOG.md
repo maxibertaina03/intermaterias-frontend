@@ -7,6 +7,18 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.3.0] - 2026-11-06
+
+Recorrido guiado la primera vez que se entra, lista de primeros pasos y alta de cliente con su contacto.
+
+### Agregado
+- **Recorrido guiado** la primera vez que alguien entra (con `driver.js`): resalta Seguimiento, Encargos, Catálogos, Usuarios, el aviso de la prueba y el menú. Muestra solo lo que cada rol ve; se puede volver a ver desde el menú de usuario (*Ver el recorrido*).
+- **Primeros pasos** en Pendientes, para el administrador: 7 pasos para cargar el primer evento de punta a punta, que se tildan solos según lo que ya cargó la empresa, con barra de progreso y botón a cada pantalla.
+- **Nuevo cliente** con su persona de contacto (opcional) en el mismo formulario.
+
+### Cambiado
+- En Clientes, "Sin contacto" pasa a ser el enlace *Agregar contacto* a la ficha del cliente.
+
 ## [2.2.1] - 2026-11-06
 
 Imagen de producción publicada en GitHub Container Registry para desplegar en el VPS.
@@ -94,7 +106,8 @@ Primera versión completa: todas las pantallas del recorrido de un evento, con l
 - CRUD de empresas con navbar, página 404 y estilos generales.
 - `Dockerfile` para correr el front en la infraestructura.
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.2.1...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.3.0...develop
+[2.3.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.0.1...v2.1.0
