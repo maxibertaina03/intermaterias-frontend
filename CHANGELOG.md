@@ -7,6 +7,10 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y l
 
 ## [Sin publicar]
 
+## [2.5.2] - 2026-11-20
+
+Sin cambios en el front: la versión acompaña al resto del sistema.
+
 ## [2.5.1] - 2026-11-20
 
 Sin cambios en el front: la versión acompaña al resto del sistema.
@@ -118,7 +122,8 @@ Primera versión completa: todas las pantallas del recorrido de un evento, con l
 - CRUD de empresas con navbar, página 404 y estilos generales.
 - `Dockerfile` para correr el front en la infraestructura.
 
-[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.5.1...develop
+[Sin publicar]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.5.2...develop
+[2.5.2]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.5.0...v2.5.1
 [2.5.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/maxibertaina03/intermaterias-frontend/compare/v2.3.0...v2.4.0
